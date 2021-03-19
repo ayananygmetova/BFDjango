@@ -10,14 +10,14 @@ class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        if self.action == 'destroy' or self.action == 'create':
-            # modify/create only tasks
+        if self.action == 'create':
+            # create only tasks
             return Task.objects.all()
-        # show all todos with their tasks
+        # show, update all todos with their tasks
         return Todo.objects.all()
 
     def get_serializer_class(self):
-        if self.action == 'destroy' or self.action == 'create':
+        if self.action == 'create':
             return TaskSerializer
         elif self.action == 'list':
             # serializer for list
