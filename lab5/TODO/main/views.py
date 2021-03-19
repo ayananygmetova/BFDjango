@@ -11,19 +11,15 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'create':
-            # create only tasks
-            return Task.objects.all()
-        # show, update all todos with their tasks
-        return Todo.objects.all()
+            return Task.objects.all()       # create only tasks
+        return Todo.objects.all()           # show, update all todos with their tasks
 
     def get_serializer_class(self):
         if self.action == 'create':
             return TaskSerializer
         elif self.action == 'list':
-            # serializer for list
             return TodoListSerializer
-        # serializer for retrieve
-        return TodoSerializer
+        return TodoSerializer               # serializer for retrieve
 
     @action(methods=['get'], detail=True)
     def completed(self, request, *args, **kwargs):
