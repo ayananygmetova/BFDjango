@@ -15,20 +15,13 @@ class Todo(models.Model):
         verbose_name_plural = 'Списки задач'
 
 
-def get_last_todo():
-    todo = Todo.objects.last()
-    if todo:
-        return todo.id
-    return Todo.objects.create(name='List 1').id
-
-
 class Task(models.Model):
     name = models.CharField(max_length=240)
     created = models.DateField(auto_now_add=True)
     due = models.DateField(default=(datetime.datetime.now() + datetime.timedelta(days=2)).date())
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
     completed = models.BooleanField(default=False)
-    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, default=get_last_todo(), null=True, blank=True,
+    todo = models.ForeignKey(Todo, on_delete=models.CASCADE, null=True, blank=True,
                              related_name='tasks')
 
     class Meta:
